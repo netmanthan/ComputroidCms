@@ -11,8 +11,8 @@ from frappe.utils import encode, get_files_path , getdate, to_timedelta,  flt
 from frappe.model.document import Document
 from frappe.model.mapper import get_mapped_doc
 from frappe.utils.password import encrypt
-from computroidcms.computroidcms.api import get_business_from_login, check_domain, get_today_date
-from computroidcms.computroidcms.api import get_template_folder, unescape
+from computroidcms.computroid_cms.api import get_business_from_login, check_domain, get_today_date
+from computroidcms.computroid_cms.api import get_template_folder, unescape
 from urllib.parse import urljoin, unquote, urlencode
 
 class PageSection(Document):

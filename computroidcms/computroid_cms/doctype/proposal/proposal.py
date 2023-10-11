@@ -10,12 +10,12 @@ import urllib.parse
 from frappe.utils import encode, get_files_path, getdate
 from frappe.model.mapper import get_mapped_doc
 from frappe.website.website_generator import WebsiteGenerator
-from computroidcms.computroidcms.api import check_domain, get_business_from_login
+from computroidcms.computroid_cms.api import check_domain, get_business_from_login
 from frappe.model.naming import make_autoname
 # from computroidcms.utils.setup import get_settings_from_domain, \
 # 	get_settings_value_from_domain, get_theme_settings
-from computroidcms.computroidcms.api import get_template_folder, unescape
-from computroidcms.computroidcms.proposal_api import generate_token
+from computroidcms.computroid_cms.api import get_template_folder, unescape
+from computroidcms.computroid_cms.proposal_api import generate_token
 from urllib.parse import urljoin, unquote, urlencode
 
 class Proposal(WebsiteGenerator):
@@ -70,11 +70,11 @@ class Proposal(WebsiteGenerator):
 					frappe.db.commit()
 		if self.web_section:
 			for item in self.web_section:
-				from computroidcms.computroidcms.doctype.page_section.page_section import generate_section_html
+				from computroidcms.computroid_cms.doctype.page_section.page_section import generate_section_html
 				generate_section_html(item.section)
 		if self.mobile_section:
 			for item in self.mobile_section:
-				from computroidcms.computroidcms.doctype.page_section.page_section import generate_section_html
+				from computroidcms.computroid_cms.doctype.page_section.page_section import generate_section_html
 				generate_section_html(item.section)
 
 
@@ -250,7 +250,7 @@ class Proposal(WebsiteGenerator):
 			page_len=3
 			# modified by boopathy
 			# from ecommerce_business_store.cms.api import get_section_data
-			from computroidcms.computroidcms.api import get_section_data
+			from computroidcms.computroid_cms.api import get_section_data
 			#end
 			page_builder = frappe.get_doc('Proposal', self.name)
 			page_sections = frappe.get_all("Mobile Page Section", fields=["name", "section", "parent"], filters= {"parent":page_builder.name, 'parentfield':'web_section'}, order_by='idx')
@@ -773,7 +773,7 @@ def generate_css_file():
 def get_proposal_html(page,name):
 	page_template=''
 	page_template += '<style></style>'
-	from computroidcms.computroidcms.doctype.page_section.page_section import get_section_data
+	from computroidcms.computroid_cms.doctype.page_section.page_section import get_section_data
 	options = {}
 	quotation = frappe.db.get_all("Quotation", fields=["*"], filters={"name": name})
 	for qt in quotation:
@@ -1183,7 +1183,7 @@ def get_page_html(doc, sections, html, source_doc, device_type, add_info=None, p
 			if frappe.session.user != 'Guest':
 				#modified by boopathy on 10/08/22
 				# from ecommerce_business_store.cms.doctype.page_section.page_section import get_data_source
-				from computroidcms.computroidcms.doctype.page_section.page_section import get_data_source
+				from computroidcms.computroid_cms.doctype.page_section.page_section import get_data_source
 				#end
 				doc = frappe.get_doc('Page Section', item.section)
 				data_source['data'] = get_data_source(doc.query, doc.reference_document, doc.no_of_records, 1, business=doc.business)
@@ -1247,7 +1247,7 @@ def get_scroll_content_mobile_app(page, add_info=None, page_no=0, page_len=3):
 			if frappe.session.user != 'Guest':
 				#modified by boopathy on 10/08/22
 				# from ecommerce_business_store.cms.doctype.page_section.page_section import get_data_source
-				from computroidcms.computroidcms.doctype.page_section.page_section import get_data_source
+				from computroidcms.computroid_cms.doctype.page_section.page_section import get_data_source
 				#end
 				doc = frappe.get_doc('Page Section', item.section)
 				data_source['data'] = get_data_source(doc.query, doc.reference_document, doc.no_of_records, 1, business=doc.business)
@@ -1467,7 +1467,7 @@ def get_element_properties(id):
 			class_name = get_class_name()
 			#modified by boopathy on 10/08/2022
 			# from ecommerce_business_store.cms.doctype.page_section.page_section import get_class_name
-			from computroidcms.computroidcms.doctype.page_section.page_section import get_class_name
+			from computroidcms.computroid_cms.doctype.page_section.page_section import get_class_name
 			#end
 			page_section_doc = frappe.get_doc("Page Section",fields[0].parent)
 			page_section_doc.class_name = class_name
@@ -1687,7 +1687,7 @@ def get_page_data(doc, sections, source_doc, device_type, page_no=0, page_len=5)
 				if frappe.session.user != 'Guest':
 					#modified by boopathy - 10/08/2022
 					# from ecommerce_business_store.cms.doctype.page_section.page_section import get_data_source
-					from computroidcms.computroidcms.doctype.page_section.page_section import get_data_source
+					from computroidcms.computroid_cms.doctype.page_section.page_section import get_data_source
 
 					#end
 					doc = frappe.get_doc('Page Section', item.section)
@@ -1865,7 +1865,7 @@ def get_global_fonts(parent):
 
 @frappe.whitelist(allow_guest=True)
 def generate_pdf(page, name):
-	from computroidcms.computroidcms.doctype.page_section.page_section import get_section_data
+	from computroidcms.computroid_cms.doctype.page_section.page_section import get_section_data
 	from frappe.utils.pdf import get_pdf
 	options = {}
 	quotation = frappe.db.get_all("Quotation", fields=["*"], filters={"name": name})
@@ -2002,7 +2002,7 @@ def generate_pdf(page, name):
 
 @frappe.whitelist()
 def get_page_pdf(page, name):
-	from computroidcms.computroidcms.doctype.page_section.page_section import get_section_data
+	from computroidcms.computroid_cms.doctype.page_section.page_section import get_section_data
 	from frappe.utils.pdf import get_pdf
 	
 	header_template=""
@@ -2179,7 +2179,7 @@ def generate_email_pdf(doc_details):
 	try:
 		page = doc_details.name
 		name = doc_details.quotation
-		from computroidcms.computroidcms.doctype.page_section.page_section import get_section_data
+		from computroidcms.computroid_cms.doctype.page_section.page_section import get_section_data
 		from frappe.utils.pdf import get_pdf
 		options = {}
 		quotation = frappe.db.get_all("Quotation", fields=["*"], filters={"name": name})

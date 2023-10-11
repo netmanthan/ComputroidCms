@@ -73,7 +73,7 @@ def get_scroll_content(route, page_no=0, page_len=3, device_type=None):
 
 @frappe.whitelist(allow_guest = True)
 def get_section_data(section, page_builder, device_type):
-	from computroidcms.computroidcms.doctype.web_page_builder.web_page_builder import  get_source_doc_data, get_page_section
+	from computroidcms.computroid_cms.doctype.web_page_builder.web_page_builder import  get_source_doc_data, get_page_section
 	page_builder = frappe.get_doc('Web Page Builder', page_builder)
 	source_doc, sections= get_source_doc_data(page_builder, device_type)
 	# frappe.log_error(source_doc,"source_doc")
@@ -405,7 +405,7 @@ def get_page_builder_data(page, customer=None,application_type="mobile",business
 	if use_page_builder:
 		with open(os.path.join(path, 'data_source', (page[0].name.lower().replace(' ','_') + ptype + '.json'))) as f:
 			data = json.loads(f.read())
-			from computroidcms.computroidcms.doctype.page_section.page_section import get_data_source
+			from computroidcms.computroid_cms.doctype.page_section.page_section import get_data_source
 			lists = []
 			# frappe.log_error(data, "---page_builders--")
 			for item in data:
@@ -523,7 +523,7 @@ def get_header_info(header_id):
 		if os.path.exists(os.path.join(path, 'data_source', (header_id.lower().replace(' ','_')  + '_web.json'))):
 			with open(os.path.join(path, 'data_source', (header_id.lower().replace(' ','_')  + '_web.json'))) as f:
 				data = json.loads(f.read())
-				from computroidcms.computroidcms.doctype.page_section.page_section import get_data_source
+				from computroidcms.computroid_cms.doctype.page_section.page_section import get_data_source
 				lists = []
 				for item in data:
 					if item.get('section_type')=="Menu":
@@ -560,7 +560,7 @@ def get_footer_info(footer_id):
 		path = frappe.utils.get_files_path()
 		with open(os.path.join(path, 'data_source', (footer_id.lower().replace(' ','_')  + '_web.json'))) as f:
 			data = json.loads(f.read())
-			from computroidcms.computroidcms.doctype.page_section.page_section import get_data_source
+			from computroidcms.computroid_cms.doctype.page_section.page_section import get_data_source
 			lists = []
 			for item in data:
 				if item.get('section_type')=="Menu":
@@ -675,8 +675,8 @@ def update_website_context(context):
 
 def get_device_type(context):
 	try:
-		from computroidcms.computroidcms.device_detect.detect import detect_mobile_browser
-		from computroidcms.computroidcms.device_detect.utilities import get_user_agent	
+		from computroidcms.computroid_cms.device_detect.detect import detect_mobile_browser
+		from computroidcms.computroid_cms.device_detect.utilities import get_user_agent
 		ua=None
 		try:
 			req = frappe.local.request
@@ -788,7 +788,7 @@ def get_page_html(doc, sections, html, source_doc, device_type, add_info=None, p
 			if frappe.session.user != 'Guest':
 				#modified by boopathy on 10/08/22
 				# from ecommerce_business_store.cms.doctype.page_section.page_section import get_data_source
-				from computroidcms.computroidcms.doctype.page_section.page_section import get_data_source
+				from computroidcms.computroid_cms.doctype.page_section.page_section import get_data_source
 				#end
 				doc = frappe.get_doc('Page Section', item.section)
 				data_source['data'] = get_data_source(doc.query, doc.reference_document, doc.no_of_records, 1, business=doc.business)
